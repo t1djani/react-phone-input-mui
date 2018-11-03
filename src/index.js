@@ -7,6 +7,7 @@ import { trim, startsWith } from 'lodash/string';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import TextField from '@material-ui/core/TextField';
 import { document } from './global.js';
 
 import countryData from './country_data.js';
@@ -108,6 +109,9 @@ class ReactPhoneInput extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.numberInputRef = React.createRef();
+
     let filteredCountries = countryData.allCountries;
 
     if (props.disableAreaCodes) filteredCountries = this.deleteAreaCodes(filteredCountries);
@@ -400,7 +404,7 @@ class ReactPhoneInput extends React.Component {
 
   // Put the cursor to the end of the input (usually after a focus event)
   cursorToEnd = () => {
-    const input = this.numberInputRef;
+    const input = this.numberInputRef.current;
     input.focus();
     if (this.props.isModernBrowser) {
       const len = input.value.length;
@@ -510,10 +514,10 @@ class ReactPhoneInput extends React.Component {
         const lastChar = formattedNumber.charAt(formattedNumber.length - 1);
 
         if (lastChar == ')') {
-          this.numberInputRef.setSelectionRange(formattedNumber.length - 1, formattedNumber.length - 1);
+          this.numberInputRef.current.setSelectionRange(formattedNumber.length - 1, formattedNumber.length - 1);
         }
         else if (caretPosition > 0 && oldFormattedText.length >= formattedNumber.length) {
-          this.numberInputRef.setSelectionRange(caretPosition, caretPosition);
+          this.numberInputRef.current.setSelectionRange(caretPosition, caretPosition);
         }
       }
 
@@ -551,8 +555,8 @@ class ReactPhoneInput extends React.Component {
 
   handleInputFocus = (e) => {
     // if the input is blank, insert dial code of the selected country
-    if (this.numberInputRef) {
-      if (this.numberInputRef.value === '+' && this.state.selectedCountry && !this.props.disableCountryCode) {
+    if (this.numberInputRef.current) {
+      if (this.numberInputRef.current.value === '+' && this.state.selectedCountry && !this.props.disableCountryCode) {
         this.setState({
           formattedNumber: '+' + this.state.selectedCountry.dialCode
         }, () => setTimeout(this.cursorToEnd, 10));
@@ -714,8 +718,6 @@ class ReactPhoneInput extends React.Component {
     const arrowClasses = classNames({"arrow": true, "up": showDropdown});
     const inputClasses = classNames({
       [this.props.inputClass]: true,
-      "form-control": true,
-      "invalid-number": !this.props.isValid(formattedNumber.replace(/\D/g, ''))
     });
 
     const flagViewClasses = classNames({
@@ -728,8 +730,9 @@ class ReactPhoneInput extends React.Component {
     return (
       <div
         className={this.props.containerClass}
-        style={this.props.containerStyle}>
-        <input
+        style={this.props.containerStyle}
+      >
+        <TextField
           className={inputClasses}
           style={this.props.inputStyle}
           onChange={this.handleInput}
@@ -737,19 +740,20 @@ class ReactPhoneInput extends React.Component {
           onFocus={this.handleInputFocus}
           onBlur={this.handleInputBlur}
           value={formattedNumber}
-          ref={el => this.numberInputRef = el}
+          inputRef={this.numberInputRef}
           onKeyDown={this.handleInputKeyDown}
           placeholder={this.state.placeholder}
           disabled={this.props.disabled}
           type="tel"
+          fullWidth
+          error={!this.props.isValid(formattedNumber.replace(/\D/g, ''))}
           {...this.props.inputExtraProps}
         />
-
         <div
           className={flagViewClasses}
           style={this.props.buttonStyle}
           onKeyDown={this.handleKeydown}
-          ref={el => this.dropdownContainerRef = el}
+          // ref={el => this.dropdownContainerRef = el}
         >
           <div
             onClick={disableDropdown ? undefined : this.handleFlagDropdownClick}
@@ -760,7 +764,10 @@ class ReactPhoneInput extends React.Component {
               {!disableDropdown && <div className={arrowClasses}></div>}
             </div>
           </div>
-
+        </div>
+        <div
+          ref={el => this.dropdownContainerRef = el}
+        >
           {showDropdown && this.getCountryDropdownList()}
         </div>
       </div>
