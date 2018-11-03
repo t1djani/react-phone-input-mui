@@ -1,4 +1,6 @@
-# react-phone-input-2
+# react-phone-input-mui
+_Fork from [react-phone-input-2](https://github.com/bl00mber/react-phone-input-2)_
+
 Highly customizable phone input component with auto formatting.
 
 ![alt tag](https://media.giphy.com/media/l378A8qFNzgiuPUre/giphy.gif)
