@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ReactPhoneInput from './index';
+import { TextField } from '@material-ui/core';
 
 export default render(
   <div style={{ fontFamily: "'Roboto', sans-serif", fontSize: '15px' }}>
@@ -23,16 +24,19 @@ export default render(
       <p>v1.2.1</p>
       <p>Exclude countries (usa, canada)</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='no'
         excludeCountries={['us', 'ca']}
       />
       <p>Only countries</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='gb'
         onlyCountries={['gb', 'es']}
       />
       <p>Preferred countries</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='it'
         preferredCountries={['it', 'se']}
       />
@@ -42,10 +46,12 @@ export default render(
       <p>v2</p>
       <p>Auto country detect by value</p>
       <ReactPhoneInput
+        component={TextField}
         value='+3802343252'
       />
       <p>Disabled area codes with disableAreaCodes</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='us'
         disableAreaCodes={true}
       />
@@ -53,6 +59,7 @@ export default render(
       <p>Customizable placeholder</p>
       <p>Customizable styles</p>
       <ReactPhoneInput
+        component={TextField}
         disableAreaCodes={true}
         placeholder='Type your phone here'
         inputStyle={{
@@ -67,6 +74,7 @@ export default render(
       />
       <p>Customizable classes</p>
       <ReactPhoneInput
+        component={TextField}
         containerClass={'react-tel-input'}
         inputClass={'custom-phone-input'}
         buttonClass={'custom-phone-button'}
@@ -77,16 +85,19 @@ export default render(
     <div style={{ display: 'inline-block', marginLeft: '40px', verticalAlign: 'top', marginTop: '35px' }}>
       <p>Custom region selected: {`{'europe'}`}</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='it'
         regions={'europe'}
       />
       <p>Custom regions selected: {`{['north-america', 'carribean']}`}</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='ca'
         regions={['north-america', 'carribean']}
       />
       <p>Disabled dropdown and country code</p>
       <ReactPhoneInput
+        component={TextField}
         onlyCountries={['us']}
         defaultCountry='us'
         disableAreaCodes={true}
@@ -98,6 +109,7 @@ export default render(
       <p>Non-editable country code</p>
       <p>Autofocus</p>
       <ReactPhoneInput
+        component={TextField}
         defaultCountry='de'
         onlyCountries={['de', 'es']}
         localization={{'Germany': 'Deutschland', 'Spain': 'España'}}

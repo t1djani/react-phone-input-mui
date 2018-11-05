@@ -726,13 +726,14 @@ class ReactPhoneInput extends React.Component {
       "open-dropdown": showDropdown
     });
     const inputFlagClasses = `flag ${selectedCountry.iso2}`;
+    const MuiComponent = this.props.component;
 
     return (
       <div
         className={this.props.containerClass}
         style={this.props.containerStyle}
       >
-        <TextField
+        <MuiComponent
           className={inputClasses}
           style={this.props.inputStyle}
           onChange={this.handleInput}
@@ -753,7 +754,6 @@ class ReactPhoneInput extends React.Component {
           className={flagViewClasses}
           style={this.props.buttonStyle}
           onKeyDown={this.handleKeydown}
-          // ref={el => this.dropdownContainerRef = el}
         >
           <div
             onClick={disableDropdown ? undefined : this.handleFlagDropdownClick}
@@ -765,9 +765,7 @@ class ReactPhoneInput extends React.Component {
             </div>
           </div>
         </div>
-        <div
-          ref={el => this.dropdownContainerRef = el}
-        >
+        <div ref={el => this.dropdownContainerRef = el}>
           {showDropdown && this.getCountryDropdownList()}
         </div>
       </div>
