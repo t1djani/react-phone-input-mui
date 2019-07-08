@@ -12,7 +12,6 @@ Highly customizable phone input component with auto formatting.
 ![alt tag](https://i.imgur.com/go91R0F.png)
 
 ## Installation
-
 ```shell-script
 npm install react-phone-input-mui --save
 ```
@@ -72,25 +71,22 @@ export default withStyles(styles)(PhoneField);
 ## Original usage docs
 
 ```jsx
-React.render(
-  <ReactPhoneInput defaultCountry={'us'} onChange={handleOnChange}/>,
-  document.getElementById('root')
-);
+import ReactPhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/dist/style.css'
+
+<ReactPhoneInput defaultCountry={'us'} value={this.state.phone} onChange={handleOnChange}/>
 ```
 
-Your handler for the ``onChange`` event should expect a string as
+Your handler for the `onChange` event should expect a string as
 parameter, where the value is that of the entered phone number. For example:
 
 ```jsx
 function handleOnChange(value) {
-   this.setState({
-      phone: value
-   });
+  this.setState({ phone: value })
 }
 ```
 
 ## Options
-
 <table>
   <tr>
     <th> Name </th>
@@ -116,13 +112,13 @@ function handleOnChange(value) {
     <td> country codes to be at the top </td>
     <td> ['cu','cw','kz'] </td>
   </tr>
+
   <tr>
     <td> defaultCountry </td>
     <td> string </td>
     <td> initial country </td>
     <td> 'us' </td>
   </tr>
-
   <tr>
     <td> value </td>
     <td> string </td>
@@ -132,6 +128,11 @@ function handleOnChange(value) {
     <td> placeholder </td>
     <td> string </td>
     <td colspan="2"> custom placeholder </td>
+  </tr>
+  <tr>
+    <td> searchPlaceholder </td>
+    <td> string </td>
+    <td colspan="2"> custom search placeholder </td>
   </tr>
 
   <tr>
@@ -154,6 +155,11 @@ function handleOnChange(value) {
     <td> string </td>
     <td colspan="2"> class for dropdown container </td>
   </tr>
+  <tr>
+    <td> searchClass </td>
+    <td> string </td>
+    <td colspan="2"> class for search field </td>
+  </tr>
 
   <tr>
     <td> containerStyle </td>
@@ -174,6 +180,11 @@ function handleOnChange(value) {
     <td> dropdownStyle </td>
     <td> object </td>
     <td colspan="2"> styles for dropdown container </td>
+  </tr>
+  <tr>
+    <td> searchStyle </td>
+    <td> object </td>
+    <td colspan="2"> styles for search field </td>
   </tr>
 
   <tr>
@@ -217,6 +228,16 @@ function handleOnChange(value) {
     <td> bool </td>
     <td colspan="2"> true by default </td>
   </tr>
+  <tr>
+    <td> enableSearchField </td>
+    <td> bool </td>
+    <td colspan="2"> enables search field in the dropdown </td>
+  </tr>
+  <tr>
+    <td> disableSearchIcon </td>
+    <td> bool </td>
+    <td colspan="2"> hide icon for the search field </td>
+  </tr>
 </table>
 
 ```jsx
@@ -230,7 +251,6 @@ function handleOnChange(value) {
 ```
 
 ### Regions
-
 <table>
   <tr>
     <th> Name </th>
@@ -276,7 +296,6 @@ Regions selected: {['north-america', 'carribean']}
 ```
 
 ### Localization
-
 <table>
   <tr>
     <th> Name </th>
@@ -290,13 +309,36 @@ Regions selected: {['north-america', 'carribean']}
 
 ```jsx
 <ReactPhoneInput
-  onlyCountries=['de', 'es']
+  onlyCountries={['de', 'es']}
   localization={{'Germany': 'Deutschland', 'Spain': 'España'}}
+/>
+
+<ReactPhoneInput
+  onlyCountries={['de', 'es']}
+  localization={{'de': 'Deutschland', 'es': 'España'}}
+/>
+```
+
+### Custom masks
+<table>
+  <tr>
+    <th> Name </th>
+    <th> Type </th>
+  </tr>
+  <tr>
+    <td> masks </td>
+    <td> object </td>
+  </tr>
+</table>
+
+```jsx
+<ReactPhoneInput
+  onlyCountries={['fr', 'at']}
+  masks={{'fr': '+.. (...) ..-..-..', 'at': '+.. (....) ...-....'}}
 />
 ```
 
 ### Supported events
-
 <table>
   <tr>
     <td> onChange </td>
@@ -323,10 +365,21 @@ Country data object not returns from onKeyDown event
   <tr>
     <td> country data </td>
     <td> object </td>
-    <td> the country object { name, dialCode, country code (iso2 format) } </td>
+    <td> the country object { name, dialCode, countryCode (iso2 format) } </td>
   </tr>
 </table>
 
-## License
+### Phone without dialCode
+```jsx
+function handleOnChange(value, data) {
+  this.setState({ rawPhone: value.replace(/[^0-9]+/g,'').slice(data.dialCode.length) })
+}
+```
 
-Based on [react-phone-input](https://github.com/razagill/react-phone-input) using [MIT](https://opensource.org/licenses/MIT)
+## Contributing
+Code style changes not allowed
+
+## License
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bl00mber/react-phone-input-2/blob/master/LICENSE)
+
+Based on [react-phone-input](https://github.com/razagill/react-phone-input)
