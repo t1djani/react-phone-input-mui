@@ -1,3 +1,5 @@
+**_I'm not actively maintaining this package, but I encourage pull requests._**
+
 # react-phone-input-mui
 **[react-phone-input-2](https://github.com/bl00mber/react-phone-input-2) for [Material UI v1+](https://material-ui.com)**
 
