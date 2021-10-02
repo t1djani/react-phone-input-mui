@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce';
 import memoize from 'lodash.memoize';
 import reduce from 'lodash.reduce';
 import classNames from 'classnames';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 
 import countryData from './country_data.js';
 import './styles.less';

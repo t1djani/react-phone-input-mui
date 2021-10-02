@@ -1,8 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import ReactPhoneInput from './index';
-import { TextField } from '@material-ui/core';
-
+import TextField from '@mui/material/TextField';
 
 class Demo extends React.Component {
   state = { defaultCountry: 'br', value: '12345' }
